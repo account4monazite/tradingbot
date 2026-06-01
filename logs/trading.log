@@ -1,0 +1,16 @@
+2026-06-01 15:56:01,637 | ERROR | Order failed: symbol=BTCUSDT side=BUY type=LIMIT quantity=0.001 price=0.0
+Traceback (most recent call last):
+  File "C:\Users\shriy\OneDrive\Desktop\tradingbot\cli.py", line 30, in order
+    symbol, side, order_type, quantity = validate_order(symbol, side, order_type, quantity)
+                                         ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shriy\OneDrive\Desktop\tradingbot\bots\validation.py", line 41, in validate_order
+    raise ValueError("Price is required for LIMIT orders")
+ValueError: Price is required for LIMIT orders
+2026-06-01 15:56:48,048 | ERROR | Order failed: symbol=BTCUSDT side=LONG type=MARKET quantity=0.001 price=0.0
+Traceback (most recent call last):
+  File "C:\Users\shriy\OneDrive\Desktop\tradingbot\cli.py", line 30, in order
+    symbol, side, order_type, quantity = validate_order(symbol, side, order_type, quantity)
+                                         ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shriy\OneDrive\Desktop\tradingbot\bots\validation.py", line 31, in validate_order
+    raise ValueError("Side must be BUY or SELL")
+ValueError: Side must be BUY or SELL

@@ -1,11 +1,12 @@
 import typer
 from bots.client import client
+from bots.logging import logger
 from bots.balance import get_av_balance
 from bots.orders import (
     place_market_order,
     place_limit_order
 )
-from bots.validation import validate_side, validate_order_type,validate_order
+from bots.validation import validate_order
 
 app = typer.Typer()
 balance = get_av_balance(client)
@@ -26,9 +27,7 @@ def order(
 ):
 
     try:
-        symbol, side, order_type, quantity = validate_order(symbol,side,order_type,quantity)
-        side = validate_side(side)
-        order_type = validate_order_type(order_type)
+        symbol, side, order_type, quantity = validate_order(symbol, side, order_type, quantity)
 
         if order_type == "MARKET":
 
@@ -52,12 +51,32 @@ def order(
                 price
             )
 
+        logger.info(
+            "Order success: symbol=%s side=%s type=%s quantity=%s price=%s orderId=%s status=%s executedQty=%s",
+            symbol,
+            side,
+            order_type,
+            quantity,
+            price,
+            response.get("orderId"),
+            response.get("status"),
+            response.get("executedQty"),
+        )
+
         print("\n=== ORDER SUCCESS ===")
         print(f"Order ID: {response['orderId']}")
         print(f"Status: {response['status']}")
         print(f"Executed Qty: {response['executedQty']}")
 
     except Exception as e:
+        logger.exception(
+            "Order failed: symbol=%s side=%s type=%s quantity=%s price=%s",
+            symbol,
+            side,
+            order_type,
+            quantity,
+            price,
+        )
         print(f"Error: {e}")
 
 if __name__ == "__main__":
